@@ -111,7 +111,7 @@ data = [
 @app.route('/')
 
 def index():
-    return 'Welcome'
+    return 'API for querying static data'
 
 @app.route('/data', methods = ['GET'])
 def list():
@@ -119,20 +119,20 @@ def list():
 
 @app.route('/data/<string:country>', methods=['GET'])
 def single(country):
-    # str = json.dumps(data)
+    str = json.loads(data)
     # country = json.loads(str)
-    return jsonify({'country':data[country]})
+    return jsonify({'data':data[country]})
 
-@app.route('/data?sort=', methods = ['GET'])
+@app.route('/sort', methods = ['GET'])
 def sort():
-    sort = json.dumps(data, sort_keys=True)
-    # sort1 = json.dumps(data['matches-won'], sort_keys=True)
-    x = sort.sort(key = lambda x:x["matches-won"])
-    return x
+    order = sorted(data, key=lambda data:data['matches-won'], reverse = True)  
+    return jsonify({'order':order})
     
-# @app.route('/matches-won', methods=['GET'])
-# def filter(matches-won):
-#    won = data.query.filter(data)
+@app.route('/filter', methods=['GET'])
+def filter():
+   y = json.loads(data)
+   output_dict = [x for x in y if data['matches-lost'] >= 59]
+   return output_dict
 
     
 
