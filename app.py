@@ -117,11 +117,14 @@ def index():
 def list():
     return jsonify({'data': data})
 
-@app.route('/data/<string:country>', methods=['GET'])
-def single(country):
-    str = json.loads(data)
-    # country = json.loads(str)
-    return jsonify({'data':data[country]})
+# @app.route('/data/<string:country>', methods=['GET'])
+# def single(country):
+#     # country = json.loads(str)
+#     return jsonify({'data':data[country]})
+@app.route('/fetch', methods=['GET'])
+def single():
+    country = [x for x in data if x['country'] == 'Scotland' ]
+    return jsonify({'country':country})
 
 @app.route('/sort', methods = ['GET'])
 def sort():
@@ -130,9 +133,10 @@ def sort():
     
 @app.route('/filter', methods=['GET'])
 def filter():
-   y = json.loads(data)
-   output_dict = [x for x in y if data['matches-lost'] >= 59]
-   return output_dict
+  #  y = json.loads(data)
+  #  filtered = [x for x in data if x['matches-lost'] == 63 & x['matches-won'] == 59]
+   filtered = [x for x in data if x['matches-won'] >= 500 ] 
+   return jsonify({'filtered':filtered})
 
     
 
